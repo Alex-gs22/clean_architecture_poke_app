@@ -1,0 +1,50 @@
+name: clean_architecture_poke_app
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_bloc: ^8.1.3
+
+  # Dependency Injection
+  get_it: ^7.6.4
+  
+  # Networking
+  dio: ^5.3.3
+
+  # Local Storage
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # Functional Programming
+  dartz: ^0.10.1
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+  # Code Generation
+  build_runner: ^2.4.6
+  freezed: ^2.4.5
+  json_serializable: ^6.7.1
+  retrofit_generator: ^8.0.4
+  injectable_generator: ^2.4.1
+
+  # Testing
+  mockito: ^5.4.3
+  bloc_test: ^9.1.5
+
+flutter:
+  uses-material-design: true
