@@ -6,22 +6,23 @@ abstract class PokemonsRemoteDataSource {
 }
 
 class PokemonsRemoteDataSourceImpl implements PokemonsRemoteDataSource {
-  final Dio dio = Dio();
+  PokemonsRemoteDataSourceImpl({required Dio client}) : dio = client;
+
+  final Dio dio;
 
   @override
   Future<PokemonModel> getPokemon(int id) async {
-    final resp = await dio.get('https://pokeapi.co/api/v2/pokemon/$id/');
-    return PokemonModel.fromJson(resp.data);
-  }
-}
-
-//Example
-class SecondPokemonsRemoteDataSourceImpl implements PokemonsRemoteDataSource {
-  final Dio dio = Dio();
-
-  @override
-  Future<PokemonModel> getPokemon(int id) async {
-    final resp = await dio.get('https://pokeapi.co/api/v2/pokemon/$id/');
-    return PokemonModel.fromJson(resp.data);
+    try {
+      final resp = await dio.get('/pokemon/$id/');
+      return PokemonModel.fromJson(Map<String, dynamic>.from(resp.data));
+    } on DioException {
+      rethrow;
+    } catch (error) {
+      throw DioException(
+        requestOptions: RequestOptions(path: '/pokemon/$id/'),
+        error: error,
+        type: DioExceptionType.unknown,
+      );
+    }
   }
 }

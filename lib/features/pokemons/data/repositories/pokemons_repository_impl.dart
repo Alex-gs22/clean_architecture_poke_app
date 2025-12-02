@@ -44,6 +44,8 @@ class PokemonsRepositoryImpl implements PokemonsRepository {
       return right(resp);
     } on DioException {
       return left(ServerFailure());
+    } catch (_) {
+      return left(ServerFailure());
     }
   }
 
