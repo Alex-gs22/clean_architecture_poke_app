@@ -30,7 +30,9 @@ class HivePokemonLocalDataSourceImpl implements PokemonsLocalDataSource {
   Future<List<PokemonModel>> getCapturedPokemonsList() async {
     try {
       Box<dynamic> box = await Hive.openBox('pokemons');
-      return box.values.map((p) => PokemonModel.fromJson(p)).toList();
+      return box.values
+          .map((p) => PokemonModel.fromJson(Map<String, dynamic>.from(p)))
+          .toList();
     } catch (error) {
       debugPrint(error.toString());
       throw LocalFailure();
@@ -41,7 +43,7 @@ class HivePokemonLocalDataSourceImpl implements PokemonsLocalDataSource {
   Future<bool> liberatePokemon(int id) async {
     try {
       Box<dynamic> box = await Hive.openBox('pokemons');
-      await box.deleteAt(id);
+      await box.delete(id);
       return true;
     } catch (error) {
       debugPrint(error.toString());

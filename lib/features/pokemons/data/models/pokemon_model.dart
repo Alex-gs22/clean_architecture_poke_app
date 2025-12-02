@@ -7,17 +7,17 @@ class PokemonModel extends Pokemon {
     required super.image,
     required super.weight,
     required super.height,
-    required super.base_experience,
+    required super.baseExperience,
   });
 
-  factory PokemonModel.fromJson(json) {
+  factory PokemonModel.fromJson(Map<String, dynamic> json) {
     return PokemonModel(
       id: json['id'],
       name: json['name'],
       image: json['sprites']['front_default'],
       weight: json['weight'],
       height: json['height'],
-      base_experience: json['base_experience'],
+      baseExperience: json['base_experience'],
     );
   }
 
@@ -25,10 +25,10 @@ class PokemonModel extends Pokemon {
     return {
       'id': id,
       'name': name,
-      'sprites': {'fornt_default': image},
+      'sprites': {'front_default': image},
       'weight': weight,
       'height': height,
-      'base_experience': base_experience,
+      'base_experience': baseExperience,
     };
   }
 
@@ -39,7 +39,7 @@ class PokemonModel extends Pokemon {
       image: pokemon.image,
       weight: pokemon.weight,
       height: pokemon.height,
-      base_experience: pokemon.base_experience,
+      baseExperience: pokemon.baseExperience,
     );
   }
 }
