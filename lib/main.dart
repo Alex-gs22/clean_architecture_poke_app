@@ -22,9 +22,25 @@ class PokeApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'PokéApp',
+      themeMode: ThemeMode.system,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: primary),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: primary,
+          brightness: Brightness.light,
+          background: const Color(0xFFF6F7FB),
+          surface: Colors.white,
+        ),
         scaffoldBackgroundColor: const Color(0xFFF6F7FB),
+        useMaterial3: false,
+      ),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: primary,
+          brightness: Brightness.dark,
+          background: const Color(0xFF0F172A),
+          surface: const Color(0xFF111827),
+        ),
+        scaffoldBackgroundColor: const Color(0xFF0F172A),
         useMaterial3: false,
       ),
       routes: {

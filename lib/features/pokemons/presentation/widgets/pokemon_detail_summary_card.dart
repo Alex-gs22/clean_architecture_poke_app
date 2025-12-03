@@ -9,11 +9,14 @@ class PokemonDetailSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final surface = theme.colorScheme.surface;
+    final onSurface = theme.colorScheme.onSurface;
+    final surfaceVariant = theme.colorScheme.surfaceVariant;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: surface,
         borderRadius: BorderRadius.circular(18),
         boxShadow: const [
           BoxShadow(
@@ -30,7 +33,7 @@ class PokemonDetailSummaryCard extends StatelessWidget {
             width: 150,
             height: 150,
             decoration: BoxDecoration(
-              color: const Color(0xFFF2F3FB),
+              color: surfaceVariant,
               borderRadius: BorderRadius.circular(24),
             ),
             child: ClipRRect(
@@ -51,7 +54,7 @@ class PokemonDetailSummaryCard extends StatelessWidget {
             _capitalize(pokemon.name),
             style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.w700,
-              color: const Color(0xFF1F2A44),
+              color: onSurface,
             ),
             textAlign: TextAlign.center,
           ),
@@ -59,7 +62,7 @@ class PokemonDetailSummaryCard extends StatelessWidget {
           Text(
             '#${pokemon.id}',
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: const Color(0xFF6E7385),
+              color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
           if (pokemon.types.isNotEmpty) ...[
@@ -71,7 +74,7 @@ class PokemonDetailSummaryCard extends StatelessWidget {
               children: pokemon.types
                   .map(
                     (t) => Chip(
-                      backgroundColor: const Color(0xFF3B4CCA),
+                      backgroundColor: theme.colorScheme.primary,
                       labelPadding: const EdgeInsets.symmetric(horizontal: 10),
                       label: Text(
                         _capitalize(t),
@@ -115,7 +118,7 @@ class _DetailStat extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
-          color: const Color(0xFFF5F6FB),
+          color: Theme.of(context).colorScheme.surfaceVariant,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -123,7 +126,7 @@ class _DetailStat extends StatelessWidget {
             Text(
               label,
               style: theme.textTheme.bodySmall?.copyWith(
-                color: const Color(0xFF7A7F90),
+                color: theme.colorScheme.onSurfaceVariant,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -131,7 +134,7 @@ class _DetailStat extends StatelessWidget {
             Text(
               value,
               style: theme.textTheme.titleMedium?.copyWith(
-                color: const Color(0xFF3B4CCA),
+                color: theme.colorScheme.primary,
                 fontWeight: FontWeight.w700,
               ),
             ),

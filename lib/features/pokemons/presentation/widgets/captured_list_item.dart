@@ -14,19 +14,22 @@ class CapturedListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final surface = theme.colorScheme.surface;
+    final onSurface = theme.colorScheme.onSurface;
+    final surfaceVariant = theme.colorScheme.surfaceVariant;
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: surface,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-              color: Color(0x1A000000),
+              color: Colors.black.withOpacity(0.08),
               blurRadius: 10,
-              offset: Offset(0, 6),
+              offset: const Offset(0, 6),
             ),
           ],
         ),
@@ -37,7 +40,7 @@ class CapturedListItem extends StatelessWidget {
               width: 64,
               height: 64,
               decoration: BoxDecoration(
-                color: const Color(0xFFF2F3FB),
+                color: surfaceVariant,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ClipRRect(
@@ -45,9 +48,9 @@ class CapturedListItem extends StatelessWidget {
                 child: Image.network(
                   pokemon.image,
                   fit: BoxFit.contain,
-                  errorBuilder: (_, __, ___) => const Icon(
+                  errorBuilder: (_, __, ___) => Icon(
                     Icons.catching_pokemon,
-                    color: Color(0xFF3B4CCA),
+                    color: theme.colorScheme.primary,
                     size: 28,
                   ),
                 ),
@@ -63,14 +66,14 @@ class CapturedListItem extends StatelessWidget {
                     _capitalize(pokemon.name),
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w700,
-                      color: const Color(0xFF1F2A44),
+                      color: onSurface,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     '#${pokemon.id}',
                     style: theme.textTheme.bodyMedium?.copyWith(
-                      color: const Color(0xFF6E7385),
+                      color: theme.colorScheme.onSurfaceVariant,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -78,14 +81,14 @@ class CapturedListItem extends StatelessWidget {
                     children: [
                       _ChipStat(
                         label: '${_formatWeight(pokemon.weight)} kg',
-                        color: const Color(0xFFD6E7FF),
-                        textColor: const Color(0xFF3B4CCA),
+                        color: surfaceVariant,
+                        textColor: theme.colorScheme.primary,
                       ),
                       const SizedBox(width: 8),
                       _ChipStat(
                         label: '${_formatHeight(pokemon.height)} m',
-                        color: const Color(0xFFF0E4FF),
-                        textColor: const Color(0xFF8A5BFF),
+                        color: surfaceVariant,
+                        textColor: theme.colorScheme.primary,
                       ),
                     ],
                   ),
@@ -105,13 +108,13 @@ class CapturedListItem extends StatelessWidget {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFE6E9F4),
+                        color: surfaceVariant,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
                         _capitalize(t),
-                        style: const TextStyle(
-                          color: Color(0xFF1F2A44),
+                        style: TextStyle(
+                          color: onSurface,
                           fontWeight: FontWeight.w700,
                         ),
                         textAlign: TextAlign.center,

@@ -8,6 +8,7 @@ class CapturedHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final onBackground = theme.colorScheme.onBackground;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -23,8 +24,8 @@ class CapturedHeader extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 '$count',
-                style: const TextStyle(
-                  color: Color(0xFF1F2A44),
+                style: TextStyle(
+                  color: onBackground,
                   fontWeight: FontWeight.w800,
                   fontSize: 18,
                 ),
@@ -34,18 +35,18 @@ class CapturedHeader extends StatelessWidget {
             Text(
               'Capturados',
               style: theme.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.w800,
-                color: const Color(0xFF1F2A44),
-              ),
+                    fontWeight: FontWeight.w800,
+                    color: onBackground,
+                  ),
             ),
           ],
         ),
         const SizedBox(height: 8),
         Text(
-          'Tu colección de Pokémon\'s',
+          'Tu colección de Pokémon',
           style: theme.textTheme.bodyMedium?.copyWith(
-            color: const Color(0xFF6E7385),
-          ),
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
         ),
       ],
     );

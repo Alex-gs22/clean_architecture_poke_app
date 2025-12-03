@@ -6,6 +6,7 @@ class SearchHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final onBackground = theme.colorScheme.onBackground;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -18,9 +19,9 @@ class SearchHeader extends StatelessWidget {
                 color: Color(0xFFFFCC00),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.catching_pokemon,
-                color: Color(0xFF26395A),
+                color: onBackground,
                 size: 28,
               ),
             ),
@@ -29,7 +30,7 @@ class SearchHeader extends StatelessWidget {
               'PokéApp',
               style: theme.textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.w800,
-                    color: const Color(0xFF1F2A44),
+                    color: onBackground,
                   ),
             ),
           ],
@@ -38,7 +39,7 @@ class SearchHeader extends StatelessWidget {
         Text(
           'Descubre y captura tus Pokémon favoritos',
           style: theme.textTheme.bodyMedium?.copyWith(
-                color: const Color(0xFF6E7385),
+                color: theme.colorScheme.onSurfaceVariant,
               ),
         ),
       ],

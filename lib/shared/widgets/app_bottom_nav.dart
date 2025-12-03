@@ -12,29 +12,34 @@ class AppBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final surface = theme.colorScheme.surface;
+    final shadow = theme.brightness == Brightness.dark
+        ? Colors.black.withOpacity(0.3)
+        : const Color(0x14000000);
     return Container(
       height: 116,
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: surface,
         boxShadow: [
           BoxShadow(
-            color: Color(0x14000000),
+            color: shadow,
             blurRadius: 12,
-            offset: Offset(0, -4),
+            offset: const Offset(0, -4),
           ),
         ],
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(36),
           topRight: Radius.circular(36),
         ),
       ),
-      child: SafeArea(
+    child: SafeArea(
         top: false,
         child: Padding(
-          padding: const EdgeInsets.only(top: 8, bottom: 6, left: 6, right: 6),
+          padding: const EdgeInsets.only(top: 10, bottom: 10, left: 12, right: 12),
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
-            iconSize: 26,
+            iconSize: 28,
             backgroundColor: Colors.transparent,
             elevation: 0,
             currentIndex: currentIndex,

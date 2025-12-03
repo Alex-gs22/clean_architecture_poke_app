@@ -9,11 +9,12 @@ class PokemonDetailStatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stats = pokemon.stats;
+    final surface = Theme.of(context).colorScheme.surface;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: surface,
         borderRadius: BorderRadius.circular(18),
         boxShadow: const [
           BoxShadow(
@@ -29,9 +30,9 @@ class PokemonDetailStatsCard extends StatelessWidget {
           Text(
             'Estadísticas Base',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: const Color(0xFF1F2A44),
-                ),
+              fontWeight: FontWeight.w700,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
           const SizedBox(height: 16),
           ..._statOrder.map(

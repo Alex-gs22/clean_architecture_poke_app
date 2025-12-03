@@ -20,11 +20,14 @@ class PokemonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final surface = theme.colorScheme.surface;
+    final onSurface = theme.colorScheme.onSurface;
+    final surfaceVariant = theme.colorScheme.surfaceVariant;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: surface,
         borderRadius: BorderRadius.circular(18),
         boxShadow: const [
           BoxShadow(
@@ -41,7 +44,7 @@ class PokemonCard extends StatelessWidget {
             width: 150,
             height: 150,
             decoration: BoxDecoration(
-              color: const Color(0xFFF2F3FB),
+              color: surfaceVariant,
               borderRadius: BorderRadius.circular(24),
             ),
             child: ClipRRect(
@@ -62,7 +65,7 @@ class PokemonCard extends StatelessWidget {
             _capitalize(pokemon.name),
             style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.w700,
-              color: const Color(0xFF1F2A44),
+              color: onSurface,
             ),
             textAlign: TextAlign.center,
           ),
@@ -70,7 +73,7 @@ class PokemonCard extends StatelessWidget {
           Text(
             '#${pokemon.id}',
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: const Color(0xFF6E7385),
+              color: theme.colorScheme.onSurfaceVariant,
             ),
           ),
           const SizedBox(height: 16),
@@ -79,16 +82,22 @@ class PokemonCard extends StatelessWidget {
               _StatTile(
                 label: 'Peso',
                 value: '${_formatWeight(pokemon.weight)} kg',
+                background: surfaceVariant,
+                textColor: theme.colorScheme.primary,
               ),
               const SizedBox(width: 10),
               _StatTile(
                 label: 'Altura',
                 value: '${_formatHeight(pokemon.height)} m',
+                background: surfaceVariant,
+                textColor: theme.colorScheme.primary,
               ),
               const SizedBox(width: 10),
               _StatTile(
                 label: 'EXP Base',
                 value: '${pokemon.baseExperience}',
+                background: surfaceVariant,
+                textColor: theme.colorScheme.primary,
               ),
             ],
           ),
@@ -149,10 +158,17 @@ class PokemonCard extends StatelessWidget {
 }
 
 class _StatTile extends StatelessWidget {
-  const _StatTile({required this.label, required this.value});
+  const _StatTile({
+    required this.label,
+    required this.value,
+    required this.background,
+    required this.textColor,
+  });
 
   final String label;
   final String value;
+  final Color background;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +177,7 @@ class _StatTile extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
-          color: const Color(0xFFF5F6FB),
+          color: background,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -169,7 +185,7 @@ class _StatTile extends StatelessWidget {
             Text(
               label,
               style: theme.textTheme.bodySmall?.copyWith(
-                color: const Color(0xFF7A7F90),
+                color: theme.colorScheme.onSurfaceVariant,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -177,7 +193,7 @@ class _StatTile extends StatelessWidget {
             Text(
               value,
               style: theme.textTheme.titleMedium?.copyWith(
-                color: const Color(0xFF3B4CCA),
+                color: textColor,
                 fontWeight: FontWeight.w700,
               ),
             ),

@@ -15,10 +15,13 @@ class SearchInputCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final surface = theme.colorScheme.surface;
+    final onSurface = theme.colorScheme.onSurface;
+    final surfaceVariant = theme.colorScheme.surfaceVariant;
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [
           BoxShadow(
@@ -35,7 +38,7 @@ class SearchInputCard extends StatelessWidget {
             'ID del Pokémon',
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w600,
-              color: const Color(0xFF1F2A44),
+              color: onSurface,
             ),
           ),
           const SizedBox(height: 12),
@@ -46,19 +49,19 @@ class SearchInputCard extends StatelessWidget {
             decoration: InputDecoration(
               hintText: 'Ej: 25',
               filled: true,
-              fillColor: const Color(0xFFF9FAFB),
+              fillColor: surfaceVariant.withOpacity(0.6),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 14,
                 vertical: 14,
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFFE2E6EE)),
+                borderSide: BorderSide(color: surfaceVariant),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(
-                  color: Color(0xFF3B4CCA),
+                borderSide: BorderSide(
+                  color: theme.colorScheme.primary,
                   width: 1.5,
                 ),
               ),
@@ -71,7 +74,7 @@ class SearchInputCard extends StatelessWidget {
                 child: ElevatedButton.icon(
                   onPressed: onSearch,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF3B4CCA),
+                    backgroundColor: theme.colorScheme.primary,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
@@ -91,9 +94,9 @@ class SearchInputCard extends StatelessWidget {
                 child: OutlinedButton.icon(
                   onPressed: onRandom,
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: const Color(0xFF3B4CCA),
-                    side: const BorderSide(
-                      color: Color(0xFF3B4CCA),
+                    foregroundColor: theme.colorScheme.primary,
+                    side: BorderSide(
+                      color: theme.colorScheme.primary,
                       width: 1.4,
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 14),

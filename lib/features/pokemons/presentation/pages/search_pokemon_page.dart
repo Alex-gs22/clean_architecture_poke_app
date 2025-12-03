@@ -24,8 +24,9 @@ class _SearchPokemonPageState extends State<SearchPokemonPage> {
 
   @override
   Widget build(BuildContext context) {
+    final background = Theme.of(context).colorScheme.background;
     return ColoredBox(
-      color: const Color(0xFFF6F7FB),
+      color: background,
       child: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
