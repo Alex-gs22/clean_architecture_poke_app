@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 
-class SearchBottomNavBar extends StatelessWidget {
-  const SearchBottomNavBar({super.key});
+class AppBottomNav extends StatelessWidget {
+  const AppBottomNav({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
+
+  final int currentIndex;
+  final void Function(int index) onTap;
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: 0,
-      onTap: (_) {},
+      currentIndex: currentIndex,
+      onTap: onTap,
       selectedItemColor: const Color(0xFF3B4CCA),
       unselectedItemColor: const Color(0xFF8A8FA3),
       items: const [

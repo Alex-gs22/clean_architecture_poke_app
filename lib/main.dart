@@ -1,6 +1,10 @@
 import 'package:clean_architecture_poke_app/injection.dart';
-import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/search_pokemon_bloc.dart';
+import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/search/search_pokemon_bloc.dart';
+import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/detail/pokemon_detail_bloc.dart';
+import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/captured/captured_pokemons_bloc.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/pages/search_pokemon_page.dart';
+import 'package:clean_architecture_poke_app/features/pokemons/presentation/pages/pokemon_detail_page.dart';
+import 'package:clean_architecture_poke_app/features/pokemons/presentation/pages/captured_pokemons_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,10 +28,33 @@ class PokeApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFFF6F7FB),
         useMaterial3: false,
       ),
-      home: BlocProvider(
-        create: (_) => SearchPokemonBloc(searchPokemonUseCase: getIt()),
-        child: const SearchPokemonPage(),
-      ),
+      routes: {
+        '/': (_) => BlocProvider(
+              create: (_) => SearchPokemonBloc(
+                searchPokemonUseCase: getIt(),
+                capturePokemonUseCase: getIt(),
+              ),
+              child: const SearchPokemonPage(),
+            ),
+        '/captured': (_) => BlocProvider(
+              create: (_) => CapturedPokemonsBloc(
+                getCapturedPokemonsUseCase: getIt(),
+                liberatePokemonUseCase: getIt(),
+              )..add(CapturedPokemonsRequested()),
+              child: const CapturedPokemonsPage(),
+            ),
+        '/pokemon_detail': (context) {
+          final id = ModalRoute.of(context)?.settings.arguments as int;
+          return BlocProvider(
+            create: (_) => PokemonDetailBloc(
+              searchPokemonUseCase: getIt(),
+              capturePokemonUseCase: getIt(),
+            )..add(PokemonDetailRequested(id)),
+            child: PokemonDetailPage(pokemonId: id),
+          );
+        },
+      },
+      initialRoute: '/',
     );
   }
 }

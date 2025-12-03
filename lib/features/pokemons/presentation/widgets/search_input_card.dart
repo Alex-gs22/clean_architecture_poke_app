@@ -42,6 +42,7 @@ class SearchInputCard extends StatelessWidget {
           TextField(
             controller: controller,
             keyboardType: TextInputType.number,
+            onSubmitted: (_) => onSearch(),
             decoration: InputDecoration(
               hintText: 'Ej: 25',
               filled: true,

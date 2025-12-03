@@ -1,19 +1,10 @@
 import 'package:clean_architecture_poke_app/features/pokemons/domain/entities/pokemon.dart';
 import 'package:flutter/material.dart';
 
-class PokemonCard extends StatelessWidget {
-  const PokemonCard({
-    super.key,
-    required this.pokemon,
-    required this.onCapture,
-    required this.onViewDetails,
-    this.isCapturing = false,
-  });
+class PokemonDetailSummaryCard extends StatelessWidget {
+  const PokemonDetailSummaryCard({super.key, required this.pokemon});
 
   final Pokemon pokemon;
-  final VoidCallback onCapture;
-  final VoidCallback onViewDetails;
-  final bool isCapturing;
 
   @override
   Widget build(BuildContext context) {
@@ -71,67 +62,39 @@ class PokemonCard extends StatelessWidget {
               color: const Color(0xFF6E7385),
             ),
           ),
+          if (pokemon.types.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 10,
+              runSpacing: 8,
+              alignment: WrapAlignment.center,
+              children: pokemon.types
+                  .map(
+                    (t) => Chip(
+                      backgroundColor: const Color(0xFF3B4CCA),
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 10),
+                      label: Text(
+                        _capitalize(t),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      shape: const StadiumBorder(),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ],
           const SizedBox(height: 16),
           Row(
             children: [
-              _StatTile(
-                label: 'Peso',
-                value: '${_formatWeight(pokemon.weight)} kg',
-              ),
+              _DetailStat(label: 'Peso', value: '${_formatWeight(pokemon.weight)} kg'),
               const SizedBox(width: 10),
-              _StatTile(
-                label: 'Altura',
-                value: '${_formatHeight(pokemon.height)} m',
-              ),
+              _DetailStat(label: 'Altura', value: '${_formatHeight(pokemon.height)} m'),
               const SizedBox(width: 10),
-              _StatTile(
-                label: 'EXP Base',
-                value: '${pokemon.baseExperience}',
-              ),
+              _DetailStat(label: 'EXP Base', value: '${pokemon.baseExperience}'),
             ],
-          ),
-          const SizedBox(height: 18),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: isCapturing ? null : onCapture,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF3B4CCA),
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                elevation: 0,
-              ),
-              child: isCapturing
-                  ? const SizedBox(
-                      height: 18,
-                      width: 18,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: Colors.white,
-                      ),
-                    )
-                  : const Text(
-                      'Capturar',
-                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-                    ),
-            ),
-          ),
-          const SizedBox(height: 12),
-          OutlinedButton.icon(
-            onPressed: onViewDetails,
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
-              side: const BorderSide(color: Color(0xFF8A8FA3)),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              foregroundColor: const Color(0xFF5A6072),
-            ),
-            icon: const Icon(Icons.info_outline),
-            label: const Text('Ver detalles completos'),
           ),
         ],
       ),
@@ -139,8 +102,8 @@ class PokemonCard extends StatelessWidget {
   }
 }
 
-class _StatTile extends StatelessWidget {
-  const _StatTile({required this.label, required this.value});
+class _DetailStat extends StatelessWidget {
+  const _DetailStat({required this.label, required this.value});
 
   final String label;
   final String value;

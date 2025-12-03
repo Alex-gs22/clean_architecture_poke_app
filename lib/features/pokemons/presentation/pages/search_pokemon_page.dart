@@ -1,9 +1,9 @@
 import 'package:clean_architecture_poke_app/core/utils/utils.dart';
-import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/search_pokemon_bloc.dart';
-import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/search_bottom_nav_bar.dart';
+import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/search/search_pokemon_bloc.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/search_header.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/search_input_card.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/search_result_area.dart';
+import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/app_bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -58,7 +58,14 @@ class _SearchPokemonPageState extends State<SearchPokemonPage> {
           },
         ),
       ),
-      bottomNavigationBar: const SearchBottomNavBar(),
+      bottomNavigationBar: AppBottomNav(
+        currentIndex: 0,
+        onTap: (index) {
+          if (index == 1) {
+            Navigator.of(context).pushNamed('/captured');
+          }
+        },
+      ),
     );
   }
 

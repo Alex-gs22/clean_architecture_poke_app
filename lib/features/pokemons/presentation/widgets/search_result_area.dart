@@ -1,4 +1,4 @@
-import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/search_pokemon_bloc.dart';
+import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/search/search_pokemon_bloc.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/pokemon_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +9,20 @@ class SearchResultArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return BlocBuilder<SearchPokemonBloc, SearchPokemonState>(
+    return BlocConsumer<SearchPokemonBloc, SearchPokemonState>(
+      listenWhen: (previous, current) =>
+          current is SearchPokemonLoaded && current.statusMessage != null,
+      listener: (context, state) {
+        if (state is SearchPokemonLoaded && state.statusMessage != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.statusMessage!),
+              backgroundColor:
+                  state.isStatusError ? Colors.redAccent : Colors.green,
+            ),
+          );
+        }
+      },
       builder: (context, state) {
         if (state is SearchPokemonLoading) {
           return const Center(child: CircularProgressIndicator());
@@ -39,8 +52,18 @@ class SearchResultArea extends StatelessWidget {
             ),
           );
         }
-        if (state is SearchPokemonSuccess) {
-          return PokemonCard(pokemon: state.pokemon);
+        if (state is SearchPokemonLoaded) {
+          return PokemonCard(
+            pokemon: state.pokemon,
+            isCapturing: state.isCapturing,
+            onCapture: () => context
+                .read<SearchPokemonBloc>()
+                .add(CapturePokemonRequested(state.pokemon)),
+            onViewDetails: () => Navigator.of(context).pushNamed(
+              '/pokemon_detail',
+              arguments: state.pokemon.id,
+            ),
+          );
         }
         return Center(
           child: Column(

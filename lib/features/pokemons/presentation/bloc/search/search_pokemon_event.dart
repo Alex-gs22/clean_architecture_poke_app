@@ -10,3 +10,8 @@ class SearchPokemonRequested extends SearchPokemonEvent {
 class SearchPokemonRandomRequested extends SearchPokemonEvent {}
 
 class SearchPokemonReset extends SearchPokemonEvent {}
+
+class CapturePokemonRequested extends SearchPokemonEvent {
+  CapturePokemonRequested(this.pokemon);
+  final Pokemon pokemon;
+}
