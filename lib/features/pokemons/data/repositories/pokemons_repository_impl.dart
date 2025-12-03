@@ -21,6 +21,8 @@ class PokemonsRepositoryImpl implements PokemonsRepository {
     try {
       final bool resp = await pokemonsLocalDataSource.capturePokemon(pokemon);
       return right(resp);
+    } on AlreadyCapturedFailure {
+      return left(AlreadyCapturedFailure());
     } on LocalFailure {
       return left(LocalFailure());
     }

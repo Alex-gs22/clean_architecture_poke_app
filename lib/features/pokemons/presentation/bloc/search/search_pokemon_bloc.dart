@@ -1,3 +1,4 @@
+import 'package:clean_architecture_poke_app/core/errors/failures.dart';
 import 'package:clean_architecture_poke_app/core/utils/utils.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/domain/entities/pokemon.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/domain/use_cases/capture_pokemon.dart';
@@ -60,15 +61,29 @@ class SearchPokemonBloc extends Bloc<SearchPokemonEvent, SearchPokemonState> {
     emit(current.copyWith(isCapturing: true, statusMessage: null));
     final result = await capturePokemonUseCase(event.pokemon);
     result.fold(
+      (failure) {
+        if (failure is AlreadyCapturedFailure) {
+          emit(
+            current.copyWith(
+              isCaptured: true,
+              isCapturing: false,
+              statusMessage: 'Ya está capturado',
+              isStatusError: true,
+            ),
+          );
+        } else {
+          emit(
+            current.copyWith(
+              isCapturing: false,
+              statusMessage: 'No se pudo capturar',
+              isStatusError: true,
+            ),
+          );
+        }
+      },
       (_) => emit(
         current.copyWith(
-          isCapturing: false,
-          statusMessage: 'No se pudo capturar',
-          isStatusError: true,
-        ),
-      ),
-      (_) => emit(
-        current.copyWith(
+          isCaptured: true,
           isCapturing: false,
           statusMessage: '¡Pokémon capturado!',
           isStatusError: false,

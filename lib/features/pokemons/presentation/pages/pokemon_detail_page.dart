@@ -31,6 +31,9 @@ class PokemonDetailPage extends StatelessWidget {
                     state.isStatusError ? Colors.redAccent : Colors.green,
               ),
             );
+            if (!state.isStatusError && !state.isCaptured) {
+              Navigator.of(context).pop(true);
+            }
           }
         },
         builder: (context, state) {

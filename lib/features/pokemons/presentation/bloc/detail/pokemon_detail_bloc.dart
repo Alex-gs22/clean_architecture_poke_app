@@ -1,3 +1,4 @@
+import 'package:clean_architecture_poke_app/core/errors/failures.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/domain/entities/pokemon.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/domain/use_cases/capture_pokemon.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/domain/use_cases/liberate_pokemon.dart';
@@ -48,13 +49,26 @@ class PokemonDetailBloc extends Bloc<PokemonDetailEvent, PokemonDetailState> {
     emit(current.copyWith(isCapturing: true, statusMessage: null));
     final result = await capturePokemonUseCase(current.pokemon);
     result.fold(
-      (_) => emit(
-        current.copyWith(
-          isCapturing: false,
-          statusMessage: 'No se pudo capturar',
-          isStatusError: true,
-        ),
-      ),
+      (failure) {
+        if (failure is AlreadyCapturedFailure) {
+          emit(
+            current.copyWith(
+              isCaptured: true,
+              isCapturing: false,
+              statusMessage: 'Ya está capturado',
+              isStatusError: true,
+            ),
+          );
+        } else {
+          emit(
+            current.copyWith(
+              isCapturing: false,
+              statusMessage: 'No se pudo capturar',
+              isStatusError: true,
+            ),
+          );
+        }
+      },
       (_) => emit(
         current.copyWith(
           isCaptured: true,

@@ -70,13 +70,21 @@ class CapturedPokemonsPage extends StatelessWidget {
                                 final pokemon = pokemons[index];
                                 return CapturedListItem(
                                   pokemon: pokemon,
-                                  onTap: () => Navigator.of(context).pushNamed(
-                                    '/pokemon_detail',
-                                    arguments: {
-                                      'id': pokemon.id,
-                                      'captured': true,
-                                    },
-                                  ),
+                                  onTap: () async {
+                                    final result = await Navigator.of(context)
+                                        .pushNamed(
+                                      '/pokemon_detail',
+                                      arguments: {
+                                        'id': pokemon.id,
+                                        'captured': true,
+                                      },
+                                    );
+                                    if (result == true && context.mounted) {
+                                      context
+                                          .read<CapturedPokemonsBloc>()
+                                          .add(CapturedPokemonsRequested());
+                                    }
+                                  },
                                 );
                               },
                             ),

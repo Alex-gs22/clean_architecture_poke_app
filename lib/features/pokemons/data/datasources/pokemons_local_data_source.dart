@@ -18,10 +18,16 @@ class HivePokemonLocalDataSourceImpl implements PokemonsLocalDataSource {
   Future<bool> capturePokemon(Pokemon pokemon) async {
     try {
       Box<dynamic> box = await Hive.openBox('pokemons');
+      if (box.containsKey(pokemon.id)) {
+        throw AlreadyCapturedFailure();
+      }
       await box.put(pokemon.id, PokemonModel.fromEntity(pokemon).toJson());
       return true;
     } catch (error) {
       debugPrint(error.toString());
+      if (error is AlreadyCapturedFailure) {
+        throw error;
+      }
       throw LocalFailure();
     }
   }

@@ -14,24 +14,28 @@ class SearchPokemonError extends SearchPokemonState {
 class SearchPokemonLoaded extends SearchPokemonState {
   SearchPokemonLoaded({
     required this.pokemon,
+    this.isCaptured = false,
     this.isCapturing = false,
     this.statusMessage,
     this.isStatusError = false,
   });
 
   final Pokemon pokemon;
+  final bool isCaptured;
   final bool isCapturing;
   final String? statusMessage;
   final bool isStatusError;
 
   SearchPokemonLoaded copyWith({
     Pokemon? pokemon,
+    bool? isCaptured,
     bool? isCapturing,
     String? statusMessage,
     bool? isStatusError,
   }) {
     return SearchPokemonLoaded(
       pokemon: pokemon ?? this.pokemon,
+      isCaptured: isCaptured ?? this.isCaptured,
       isCapturing: isCapturing ?? this.isCapturing,
       statusMessage: statusMessage,
       isStatusError: isStatusError ?? this.isStatusError,

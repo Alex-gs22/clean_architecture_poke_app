@@ -8,12 +8,14 @@ class PokemonCard extends StatelessWidget {
     required this.onCapture,
     required this.onViewDetails,
     this.isCapturing = false,
+    this.isCaptured = false,
   });
 
   final Pokemon pokemon;
   final VoidCallback onCapture;
   final VoidCallback onViewDetails;
   final bool isCapturing;
+  final bool isCaptured;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +96,7 @@ class PokemonCard extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: isCapturing ? null : onCapture,
+              onPressed: (isCapturing || isCaptured) ? null : onCapture,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF3B4CCA),
                 foregroundColor: Colors.white,
@@ -113,9 +115,12 @@ class PokemonCard extends StatelessWidget {
                         color: Colors.white,
                       ),
                     )
-                  : const Text(
-                      'Capturar',
-                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                  : Text(
+                      isCaptured ? 'Capturado' : 'Capturar',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      ),
                     ),
             ),
           ),

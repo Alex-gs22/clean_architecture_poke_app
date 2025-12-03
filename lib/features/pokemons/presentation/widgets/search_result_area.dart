@@ -56,6 +56,7 @@ class SearchResultArea extends StatelessWidget {
           return PokemonCard(
             pokemon: state.pokemon,
             isCapturing: state.isCapturing,
+            isCaptured: state.isCaptured,
             onCapture: () => context
                 .read<SearchPokemonBloc>()
                 .add(CapturePokemonRequested(state.pokemon)),
