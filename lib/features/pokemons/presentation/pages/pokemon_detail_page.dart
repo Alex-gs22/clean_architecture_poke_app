@@ -52,52 +52,60 @@ class PokemonDetailPage extends StatelessWidget {
             );
           }
           if (state is PokemonDetailLoaded) {
-            return SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  PokemonDetailSummaryCard(pokemon: state.pokemon),
-                  const SizedBox(height: 16),
-                  PokemonDetailStatsCard(pokemon: state.pokemon),
-                  const SizedBox(height: 18),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: (state.isCapturing || state.isProcessing)
-                          ? null
-                          : () => _action(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: state.isCaptured
-                            ? const Color(0xFFF95F62)
-                            : const Color(0xFF3B4CCA),
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+            return GestureDetector(
+              onHorizontalDragUpdate: (details) {
+                if (details.delta.dx > 15) {
+                  Navigator.of(context).maybePop();
+                }
+              },
+              child: SingleChildScrollView(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    PokemonDetailSummaryCard(pokemon: state.pokemon),
+                    const SizedBox(height: 16),
+                    PokemonDetailStatsCard(pokemon: state.pokemon),
+                    const SizedBox(height: 18),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: (state.isCapturing || state.isProcessing)
+                            ? null
+                            : () => _action(context),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: state.isCaptured
+                              ? const Color(0xFFF95F62)
+                              : const Color(0xFF3B4CCA),
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 0,
                         ),
-                        elevation: 0,
+                        child: (state.isCapturing || state.isProcessing)
+                            ? const SizedBox(
+                                height: 18,
+                                width: 18,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Text(
+                                state.isCaptured ? 'Liberar' : 'Capturar',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                ),
+                              ),
                       ),
-                      child: (state.isCapturing || state.isProcessing)
-                          ? const SizedBox(
-                              height: 18,
-                              width: 18,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Colors.white,
-                              ),
-                            )
-                          : Text(
-                              state.isCaptured ? 'Liberar' : 'Capturar',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 16,
-                              ),
-                            ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                ],
+                    const SizedBox(height: 10),
+                  ],
+                ),
               ),
             );
           }
