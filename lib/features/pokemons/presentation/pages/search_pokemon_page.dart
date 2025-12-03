@@ -31,12 +31,12 @@ class _SearchPokemonPageState extends State<SearchPokemonPage> {
           builder: (context, constraints) {
             final double maxWidth =
                 constraints.maxWidth > 520 ? 480 : constraints.maxWidth;
+            final double horizontal = constraints.maxWidth > 520
+                ? (constraints.maxWidth - maxWidth) / 2
+                : 20;
             return SingleChildScrollView(
               padding: EdgeInsets.symmetric(
-                horizontal:
-                    constraints.maxWidth > 520
-                        ? (constraints.maxWidth - maxWidth) / 2
-                        : 20,
+                horizontal: horizontal,
                 vertical: 24,
               ),
               child: Column(
@@ -54,11 +54,11 @@ class _SearchPokemonPageState extends State<SearchPokemonPage> {
                 ],
               ),
             );
-          },
-        ),
-      ),
-    );
-  }
+         },
+       ),
+     ),
+   );
+ }
 
   void _onSearch(BuildContext context) {
     final raw = _controller.text.trim();

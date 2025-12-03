@@ -28,9 +28,9 @@ class SearchHeader extends StatelessWidget {
             Text(
               'PokéApp',
               style: theme.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.w700,
-                color: const Color(0xFF1F2A44),
-              ),
+                    fontWeight: FontWeight.w800,
+                    color: const Color(0xFF1F2A44),
+                  ),
             ),
           ],
         ),
@@ -38,8 +38,8 @@ class SearchHeader extends StatelessWidget {
         Text(
           'Descubre y captura tus Pokémon favoritos',
           style: theme.textTheme.bodyMedium?.copyWith(
-            color: const Color(0xFF6E7385),
-          ),
+                color: const Color(0xFF6E7385),
+              ),
         ),
       ],
     );
