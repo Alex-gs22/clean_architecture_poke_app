@@ -20,6 +20,7 @@ class PokemonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final surface = theme.colorScheme.brightness == Brightness.dark
         ? theme.colorScheme.surface.withOpacity(0.12)
         : theme.colorScheme.surface;
@@ -124,8 +125,12 @@ class PokemonCard extends StatelessWidget {
             child: ElevatedButton(
               onPressed: (isCapturing || isCaptured) ? null : onCapture,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF3B4CCA),
-                foregroundColor: Colors.white,
+                backgroundColor:
+                    isCaptured ? colorScheme.surfaceVariant : colorScheme.primary,
+                foregroundColor:
+                    isCaptured ? colorScheme.onSurface : colorScheme.onPrimary,
+                disabledBackgroundColor: colorScheme.surfaceVariant,
+                disabledForegroundColor: colorScheme.onSurfaceVariant,
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -158,11 +163,11 @@ class PokemonCard extends StatelessWidget {
               style: OutlinedButton.styleFrom(
                 padding:
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
-                side: const BorderSide(color: Color(0xFF8A8FA3)),
+                side: BorderSide(color: colorScheme.outline),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                foregroundColor: const Color(0xFF5A6072),
+                foregroundColor: colorScheme.onSurface,
               ),
               icon: const Icon(Icons.info_outline),
               label: const Text('Ver detalles completos'),

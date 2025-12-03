@@ -29,7 +29,7 @@ class PokemonsRepositoryImpl implements PokemonsRepository {
   }
 
   @override
-  Future<Either<Failure, List<Pokemon>>> getCapturePokemons() async {
+  Future<Either<Failure, List<Pokemon>>> getCapturedPokemons() async {
     try {
       final List<Pokemon> resp =
           await pokemonsLocalDataSource.getCapturedPokemonsList();

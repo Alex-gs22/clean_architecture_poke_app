@@ -9,6 +9,6 @@ class GetCapturedPokemonsUseCase {
   GetCapturedPokemonsUseCase({required this.repository});
 
   Future<Either<Failure, List<Pokemon>>> call() {
-    return repository.getCapturePokemons();
+    return repository.getCapturedPokemons();
   }
 }

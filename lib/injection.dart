@@ -8,10 +8,13 @@ import 'package:clean_architecture_poke_app/features/pokemons/domain/use_cases/l
 import 'package:clean_architecture_poke_app/features/pokemons/domain/use_cases/search_pokemon.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 final GetIt getIt = GetIt.instance;
 
 Future<void> initDependencies() async {
+  await Hive.initFlutter();
+
   getIt.registerLazySingleton<Dio>(
     () => Dio(
       BaseOptions(

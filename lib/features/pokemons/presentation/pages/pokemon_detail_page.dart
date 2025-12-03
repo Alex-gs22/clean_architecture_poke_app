@@ -58,6 +58,7 @@ class PokemonDetailPage extends StatelessWidget {
             );
           }
           if (state is PokemonDetailLoaded) {
+            final colorScheme = Theme.of(context).colorScheme;
             return GestureDetector(
               onHorizontalDragUpdate: (details) {
                 if (details.delta.dx > 15) {
@@ -82,9 +83,14 @@ class PokemonDetailPage extends StatelessWidget {
                             : () => _action(context),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: state.isCaptured
-                              ? const Color(0xFFF95F62)
-                              : const Color(0xFF3B4CCA),
-                          foregroundColor: Colors.white,
+                              ? colorScheme.error
+                              : colorScheme.primary,
+                          foregroundColor:
+                              state.isCaptured ? colorScheme.onError : colorScheme.onPrimary,
+                          disabledBackgroundColor:
+                              colorScheme.surfaceVariant,
+                          disabledForegroundColor:
+                              colorScheme.onSurfaceVariant,
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),

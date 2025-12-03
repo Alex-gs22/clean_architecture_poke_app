@@ -64,6 +64,7 @@ class _StatRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
@@ -73,14 +74,14 @@ class _StatRow extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: const Color(0xFF555B6B),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
                     ),
               ),
               Text(
                 '$value',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: const Color(0xFF3B4CCA),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.primary,
                       fontWeight: FontWeight.w700,
                     ),
               ),
@@ -92,7 +93,7 @@ class _StatRow extends StatelessWidget {
             child: LinearProgressIndicator(
               value: (value / 150).clamp(0, 1).toDouble(),
               minHeight: 6,
-              backgroundColor: const Color(0xFFE1E4EC),
+              backgroundColor: theme.colorScheme.surfaceVariant,
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
           ),
