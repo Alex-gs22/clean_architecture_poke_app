@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PokemonDetailPage extends StatelessWidget {
-  const PokemonDetailPage({super.key, required this.pokemonId});
+  const PokemonDetailPage({
+    super.key,
+    required this.pokemonId,
+  });
 
   final int pokemonId;
 
@@ -58,8 +61,9 @@ class PokemonDetailPage extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed:
-                          state.isCapturing ? null : () => _capture(context),
+                      onPressed: (state.isCapturing || state.isProcessing)
+                          ? null
+                          : () => _action(context),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF3B4CCA),
                         foregroundColor: Colors.white,
@@ -69,7 +73,7 @@ class PokemonDetailPage extends StatelessWidget {
                         ),
                         elevation: 0,
                       ),
-                      child: state.isCapturing
+                      child: (state.isCapturing || state.isProcessing)
                           ? const SizedBox(
                               height: 18,
                               width: 18,
@@ -78,9 +82,9 @@ class PokemonDetailPage extends StatelessWidget {
                                 color: Colors.white,
                               ),
                             )
-                          : const Text(
-                              'Capturar',
-                              style: TextStyle(
+                          : Text(
+                              state.isCaptured ? 'Liberar' : 'Capturar',
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16,
                               ),
@@ -110,7 +114,13 @@ class PokemonDetailPage extends StatelessWidget {
     );
   }
 
-  void _capture(BuildContext context) {
-    context.read<PokemonDetailBloc>().add(PokemonDetailCaptureRequested());
+  void _action(BuildContext context) {
+    final state = context.read<PokemonDetailBloc>().state;
+    if (state is! PokemonDetailLoaded) return;
+    if (state.isCaptured) {
+      context.read<PokemonDetailBloc>().add(PokemonDetailLiberateRequested());
+    } else {
+      context.read<PokemonDetailBloc>().add(PokemonDetailCaptureRequested());
+    }
   }
 }

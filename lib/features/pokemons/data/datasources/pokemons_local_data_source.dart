@@ -31,7 +31,7 @@ class HivePokemonLocalDataSourceImpl implements PokemonsLocalDataSource {
     try {
       Box<dynamic> box = await Hive.openBox('pokemons');
       return box.values
-          .map((p) => PokemonModel.fromJson(Map<String, dynamic>.from(p)))
+          .map((p) => PokemonModel.fromJson(p))
           .toList();
     } catch (error) {
       debugPrint(error.toString());

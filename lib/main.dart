@@ -44,13 +44,22 @@ class PokeApp extends StatelessWidget {
               child: const CapturedPokemonsPage(),
             ),
         '/pokemon_detail': (context) {
-          final id = ModalRoute.of(context)?.settings.arguments as int;
+          final Object? rawArgs = ModalRoute.of(context)?.settings.arguments;
+          Map args = {};
+          if (rawArgs is Map) {
+            args = rawArgs;
+          }
+          final int id = (args['id'] ?? 0) as int;
+          final bool isCaptured = args['captured'] == true;
           return BlocProvider(
             create: (_) => PokemonDetailBloc(
               searchPokemonUseCase: getIt(),
               capturePokemonUseCase: getIt(),
-            )..add(PokemonDetailRequested(id)),
-            child: PokemonDetailPage(pokemonId: id),
+              liberatePokemonUseCase: getIt(),
+            )..add(PokemonDetailRequested(id, isCaptured: isCaptured)),
+            child: PokemonDetailPage(
+              pokemonId: id,
+            ),
           );
         },
       },

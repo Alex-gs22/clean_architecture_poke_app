@@ -12,43 +12,51 @@ class PokemonModel extends Pokemon {
     required super.stats,
   });
 
-  factory PokemonModel.fromJson(Map<String, dynamic> json) {
-    final sprites = json['sprites'] as Map<String, dynamic>? ?? {};
-    final otherSprites = sprites['other'] as Map<String, dynamic>? ?? {};
-    final officialArtwork =
-        (otherSprites['official-artwork'] as Map<String, dynamic>?) ?? {};
+  factory PokemonModel.fromJson(dynamic json) {
+    final map = Map<String, dynamic>.from(json as Map);
+
+    final sprites = (map['sprites'] as Map?) != null
+        ? Map<String, dynamic>.from(map['sprites'] as Map)
+        : <String, dynamic>{};
+    final otherSprites = (sprites['other'] as Map?) != null
+        ? Map<String, dynamic>.from(sprites['other'] as Map)
+        : <String, dynamic>{};
+    final officialArtwork = (otherSprites['official-artwork'] as Map?) != null
+        ? Map<String, dynamic>.from(otherSprites['official-artwork'] as Map)
+        : <String, dynamic>{};
     final frontDefault = sprites['front_default'] ??
         officialArtwork['front_default'] ??
         '';
 
-    final dynamic rawTypes = json['types'];
+    final dynamic rawTypes = map['types'];
     final List<String> types = switch (rawTypes) {
       List<dynamic> list when list.isNotEmpty && list.first is Map =>
-        list.map((t) => t['type']['name'] as String).toList(),
+        list.map((t) => t['type']['name'].toString()).toList(),
       List<dynamic> list => list.map((t) => t.toString()).toList(),
       _ => <String>[],
     };
 
-    final dynamic rawStats = json['stats'];
+    final dynamic rawStats = map['stats'];
     final Map<String, int> stats = <String, int>{};
     if (rawStats is List<dynamic>) {
       for (final stat in rawStats) {
-        stats[stat['stat']['name'] as String] =
-            (stat['base_stat'] as num).toInt();
+        final key = stat['stat']['name'].toString();
+        final value = (stat['base_stat'] as num?)?.toInt() ?? 0;
+        stats[key] = value;
       }
-    } else if (rawStats is Map<String, dynamic>) {
+    } else if (rawStats is Map) {
       rawStats.forEach((key, value) {
-        stats[key] = (value as num).toInt();
+        stats[key.toString()] = (value as num).toInt();
       });
     }
 
     return PokemonModel(
-      id: json['id'],
-      name: json['name'],
-      image: frontDefault as String,
-      weight: (json['weight'] as num).toInt(),
-      height: (json['height'] as num).toInt(),
-      baseExperience: (json['base_experience'] as num).toInt(),
+      id: (map['id'] as num).toInt(),
+      name: map['name'].toString(),
+      image: frontDefault.toString(),
+      weight: (map['weight'] as num).toInt(),
+      height: (map['height'] as num).toInt(),
+      baseExperience: (map['base_experience'] as num).toInt(),
       types: types,
       stats: stats,
     );

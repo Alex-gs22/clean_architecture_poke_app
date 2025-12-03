@@ -61,7 +61,10 @@ class SearchResultArea extends StatelessWidget {
                 .add(CapturePokemonRequested(state.pokemon)),
             onViewDetails: () => Navigator.of(context).pushNamed(
               '/pokemon_detail',
-              arguments: state.pokemon.id,
+              arguments: {
+                'id': state.pokemon.id,
+                'captured': false,
+              },
             ),
           );
         }
