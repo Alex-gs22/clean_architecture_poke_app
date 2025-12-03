@@ -3,7 +3,6 @@ import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/search_header.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/search_input_card.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/search_result_area.dart';
-import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/app_bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,9 +24,9 @@ class _SearchPokemonPageState extends State<SearchPokemonPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF6F7FB),
-      body: SafeArea(
+    return ColoredBox(
+      color: const Color(0xFFF6F7FB),
+      child: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
             final double maxWidth =
@@ -57,14 +56,6 @@ class _SearchPokemonPageState extends State<SearchPokemonPage> {
             );
           },
         ),
-      ),
-      bottomNavigationBar: AppBottomNav(
-        currentIndex: 0,
-        onTap: (index) {
-          if (index == 1) {
-            Navigator.of(context).pushNamed('/captured');
-          }
-        },
       ),
     );
   }

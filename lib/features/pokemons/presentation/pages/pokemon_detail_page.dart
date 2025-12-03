@@ -2,7 +2,7 @@ import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/pokemon_detail_header.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/pokemon_detail_stats_card.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/pokemon_detail_summary_card.dart';
-import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/app_bottom_nav.dart';
+import 'package:clean_architecture_poke_app/shared/widgets/app_bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -111,8 +111,11 @@ class PokemonDetailPage extends StatelessWidget {
             Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
           }
           if (index == 1) {
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil('/captured', (route) => false);
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              '/',
+              (route) => false,
+              arguments: {'tab': 1},
+            );
           }
         },
       ),

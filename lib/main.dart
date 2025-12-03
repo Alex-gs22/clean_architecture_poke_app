@@ -2,9 +2,8 @@ import 'package:clean_architecture_poke_app/injection.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/search/search_pokemon_bloc.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/detail/pokemon_detail_bloc.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/captured/captured_pokemons_bloc.dart';
-import 'package:clean_architecture_poke_app/features/pokemons/presentation/pages/search_pokemon_page.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/pages/pokemon_detail_page.dart';
-import 'package:clean_architecture_poke_app/features/pokemons/presentation/pages/captured_pokemons_page.dart';
+import 'package:clean_architecture_poke_app/shared/navigation/home_shell_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,20 +28,31 @@ class PokeApp extends StatelessWidget {
         useMaterial3: false,
       ),
       routes: {
-        '/': (_) => BlocProvider(
-              create: (_) => SearchPokemonBloc(
-                searchPokemonUseCase: getIt(),
-                capturePokemonUseCase: getIt(),
+        '/': (context) {
+          final Object? rawArgs = ModalRoute.of(context)?.settings.arguments;
+          int initialTab = 0;
+          if (rawArgs is Map && rawArgs['tab'] == 1) {
+            initialTab = 1;
+          }
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) => SearchPokemonBloc(
+                  searchPokemonUseCase: getIt(),
+                  capturePokemonUseCase: getIt(),
+                  getCapturedPokemonsUseCase: getIt(),
+                ),
               ),
-              child: const SearchPokemonPage(),
-            ),
-        '/captured': (_) => BlocProvider(
-              create: (_) => CapturedPokemonsBloc(
-                getCapturedPokemonsUseCase: getIt(),
-                liberatePokemonUseCase: getIt(),
-              )..add(CapturedPokemonsRequested()),
-              child: const CapturedPokemonsPage(),
-            ),
+              BlocProvider(
+                create: (_) => CapturedPokemonsBloc(
+                  getCapturedPokemonsUseCase: getIt(),
+                  liberatePokemonUseCase: getIt(),
+                )..add(CapturedPokemonsRequested()),
+              ),
+            ],
+            child: HomeShellPage(initialIndex: initialTab),
+          );
+        },
         '/pokemon_detail': (context) {
           final Object? rawArgs = ModalRoute.of(context)?.settings.arguments;
           Map args = {};

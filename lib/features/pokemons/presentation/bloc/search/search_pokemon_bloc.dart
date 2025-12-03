@@ -2,6 +2,7 @@ import 'package:clean_architecture_poke_app/core/errors/failures.dart';
 import 'package:clean_architecture_poke_app/core/utils/utils.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/domain/entities/pokemon.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/domain/use_cases/capture_pokemon.dart';
+import 'package:clean_architecture_poke_app/features/pokemons/domain/use_cases/get_captured_pokemons.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/domain/use_cases/search_pokemon.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,6 +13,7 @@ class SearchPokemonBloc extends Bloc<SearchPokemonEvent, SearchPokemonState> {
   SearchPokemonBloc({
     required this.searchPokemonUseCase,
     required this.capturePokemonUseCase,
+    required this.getCapturedPokemonsUseCase,
   }) : super(SearchPokemonInitial()) {
     on<SearchPokemonRequested>(_onSearchPokemonRequested);
     on<SearchPokemonRandomRequested>(_onSearchPokemonRandomRequested);
@@ -21,6 +23,7 @@ class SearchPokemonBloc extends Bloc<SearchPokemonEvent, SearchPokemonState> {
 
   final SearchPokemonUseCase searchPokemonUseCase;
   final CapturePokemonUseCase capturePokemonUseCase;
+  final GetCapturedPokemonsUseCase getCapturedPokemonsUseCase;
 
   Future<void> _onSearchPokemonRequested(
     SearchPokemonRequested event,
@@ -32,9 +35,17 @@ class SearchPokemonBloc extends Bloc<SearchPokemonEvent, SearchPokemonState> {
     }
     emit(SearchPokemonLoading());
     final result = await searchPokemonUseCase(event.id);
-    result.fold(
-      (failure) => emit(SearchPokemonError('No pudimos encontrar el Pokémon')),
-      (pokemon) => emit(SearchPokemonLoaded(pokemon: pokemon)),
+    await result.fold(
+      (failure) async =>
+          emit(SearchPokemonError('No pudimos encontrar el Pokémon')),
+      (pokemon) async {
+        bool isCaptured = false;
+        final captured = await getCapturedPokemonsUseCase();
+        captured.fold((_) {}, (list) {
+          isCaptured = list.any((p) => p.id == pokemon.id);
+        });
+        emit(SearchPokemonLoaded(pokemon: pokemon, isCaptured: isCaptured));
+      },
     );
   }
 

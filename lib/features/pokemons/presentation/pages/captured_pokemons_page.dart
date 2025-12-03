@@ -1,5 +1,4 @@
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/captured/captured_pokemons_bloc.dart';
-import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/app_bottom_nav.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/captured_header.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/captured_list_item.dart';
 import 'package:flutter/material.dart';
@@ -96,19 +95,6 @@ class CapturedPokemonsPage extends StatelessWidget {
             return const SizedBox.shrink();
           },
         ),
-      ),
-      bottomNavigationBar: AppBottomNav(
-        currentIndex: 1,
-        onTap: (index) {
-          if (index == 0) {
-            final navigator = Navigator.of(context);
-            if (navigator.canPop()) {
-              navigator.pop();
-            } else {
-              navigator.pushReplacementNamed('/');
-            }
-          }
-        },
       ),
     );
   }

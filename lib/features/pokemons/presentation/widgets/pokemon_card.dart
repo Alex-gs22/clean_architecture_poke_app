@@ -125,18 +125,22 @@ class PokemonCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          OutlinedButton.icon(
-            onPressed: onViewDetails,
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
-              side: const BorderSide(color: Color(0xFF8A8FA3)),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: isCapturing ? null : onViewDetails,
+              style: OutlinedButton.styleFrom(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
+                side: const BorderSide(color: Color(0xFF8A8FA3)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                foregroundColor: const Color(0xFF5A6072),
               ),
-              foregroundColor: const Color(0xFF5A6072),
+              icon: const Icon(Icons.info_outline),
+              label: const Text('Ver detalles completos'),
             ),
-            icon: const Icon(Icons.info_outline),
-            label: const Text('Ver detalles completos'),
           ),
         ],
       ),

@@ -64,7 +64,7 @@ class SearchResultArea extends StatelessWidget {
               '/pokemon_detail',
               arguments: {
                 'id': state.pokemon.id,
-                'captured': false,
+                'captured': state.isCaptured,
               },
             ),
           );
