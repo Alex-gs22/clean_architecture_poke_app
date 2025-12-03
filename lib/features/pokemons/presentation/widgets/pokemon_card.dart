@@ -77,7 +77,9 @@ class PokemonCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          Row(
+          Wrap(
+            spacing: 10,
+            runSpacing: 10,
             children: [
               _StatTile(
                 label: 'Peso',
@@ -85,14 +87,12 @@ class PokemonCard extends StatelessWidget {
                 background: surfaceVariant,
                 textColor: theme.colorScheme.primary,
               ),
-              const SizedBox(width: 10),
               _StatTile(
                 label: 'Altura',
                 value: '${_formatHeight(pokemon.height)} m',
                 background: surfaceVariant,
                 textColor: theme.colorScheme.primary,
               ),
-              const SizedBox(width: 10),
               _StatTile(
                 label: 'EXP Base',
                 value: '${pokemon.baseExperience}',

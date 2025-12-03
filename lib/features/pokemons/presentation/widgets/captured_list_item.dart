@@ -77,14 +77,15 @@ class CapturedListItem extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Row(
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
                     children: [
                       _ChipStat(
                         label: '${_formatWeight(pokemon.weight)} kg',
                         color: surfaceVariant,
                         textColor: theme.colorScheme.primary,
                       ),
-                      const SizedBox(width: 8),
                       _ChipStat(
                         label: '${_formatHeight(pokemon.height)} m',
                         color: surfaceVariant,

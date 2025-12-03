@@ -36,43 +36,51 @@ class _HomeShellPageState extends State<HomeShellPage> {
   @override
   Widget build(BuildContext context) {
     final pages = [
-      const SearchPokemonPage(),
-      const CapturedPokemonsPage(),
+      LayoutBuilder(
+        builder: (context, constraints) {
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: constraints.maxWidth),
+            child: const SearchPokemonPage(),
+          );
+        },
+      ),
+      LayoutBuilder(
+        builder: (context, constraints) {
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: constraints.maxWidth),
+            child: const CapturedPokemonsPage(),
+          );
+        },
+      ),
     ];
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider.value(value: context.read<SearchPokemonBloc>()),
-        BlocProvider.value(value: context.read<CapturedPokemonsBloc>()),
-      ],
-      child: HomeShellScope(
-        tabNotifier: _tabNotifier,
-        setTab: (i) {
-          if (_index == i) return;
-          setState(() {
-            _index = i;
-            _tabNotifier.value = i;
-          });
-          if (i == 1) {
-            context
-                .read<CapturedPokemonsBloc>()
-                .add(CapturedPokemonsRequested());
-          }
-        },
-        child: Scaffold(
-          body: IndexedStack(
-            index: _index,
-            children: pages,
-          ),
-          bottomNavigationBar: ValueListenableBuilder<int>(
-            valueListenable: _tabNotifier,
-            builder: (context, value, _) {
-              return AppBottomNav(
-                currentIndex: value,
-                onTap: (i) => HomeShellScope.of(context)?.setTab(i),
-              );
-            },
-          ),
+    return HomeShellScope(
+      tabNotifier: _tabNotifier,
+      setTab: (i) {
+        if (_index == i) return;
+        setState(() {
+          _index = i;
+          _tabNotifier.value = i;
+        });
+        if (i == 1) {
+          context
+              .read<CapturedPokemonsBloc>()
+              .add(CapturedPokemonsRequested());
+        }
+      },
+      child: Scaffold(
+        body: IndexedStack(
+          index: _index,
+          children: pages,
+        ),
+        bottomNavigationBar: ValueListenableBuilder<int>(
+          valueListenable: _tabNotifier,
+          builder: (context, value, _) {
+            return AppBottomNav(
+              currentIndex: value,
+              onTap: (i) => HomeShellScope.of(context)?.setTab(i),
+            );
+          },
         ),
       ),
     );

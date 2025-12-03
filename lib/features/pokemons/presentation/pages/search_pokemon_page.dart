@@ -25,20 +25,29 @@ class _SearchPokemonPageState extends State<SearchPokemonPage> {
   @override
   Widget build(BuildContext context) {
     final background = Theme.of(context).colorScheme.background;
+    final orientation = MediaQuery.of(context).orientation;
     return ColoredBox(
       color: background,
       child: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final double maxWidth =
-                constraints.maxWidth > 520 ? 480 : constraints.maxWidth;
-            final double horizontal = constraints.maxWidth > 520
-                ? (constraints.maxWidth - maxWidth) / 2
-                : 20;
+            double maxWidth;
+            if (constraints.maxWidth > 900) {
+              maxWidth = 900;
+            } else if (constraints.maxWidth > 600) {
+              maxWidth = 720;
+            } else {
+              maxWidth = 480;
+            }
+            final double horizontal = (constraints.maxWidth - maxWidth) / 2;
+            final double safeHorizontal =
+                horizontal.clamp(20.0, constraints.maxWidth);
+            final double verticalPadding =
+                orientation == Orientation.landscape ? 12 : 24;
             return SingleChildScrollView(
               padding: EdgeInsets.symmetric(
-                horizontal: horizontal,
-                vertical: 24,
+                horizontal: safeHorizontal,
+                vertical: verticalPadding,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
