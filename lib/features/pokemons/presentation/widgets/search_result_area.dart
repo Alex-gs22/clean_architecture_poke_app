@@ -78,31 +78,31 @@ class SearchResultArea extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 42),
+              const SizedBox(height: 32),
               Container(
-                width: 94,
-                height: 94,
+                width: 90,
+                height: 90,
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.primary.withOpacity(0.15),
+                  color: theme.colorScheme.primary.withOpacity(0.12),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   Icons.search,
                   color: isDark ? Colors.white : theme.colorScheme.primary,
-                  size: 42,
+                  size: 36,
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
               Text(
                 'Busca tu Pokémon',
                 style: theme.textTheme.titleMedium?.copyWith(
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.w700,
                   color: isDark ? Colors.white : theme.colorScheme.onSurface,
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               Text(
                 'Ingresa un ID o prueba con uno aleatorio',
                 style: theme.textTheme.bodyMedium?.copyWith(

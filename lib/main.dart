@@ -85,6 +85,7 @@ class PokeApp extends StatelessWidget {
             )..add(PokemonDetailRequested(id, isCaptured: isCaptured)),
             child: PokemonDetailPage(
               pokemonId: id,
+              initialTab: isCaptured ? 1 : 0,
             ),
           );
         },

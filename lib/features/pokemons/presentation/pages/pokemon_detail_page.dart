@@ -2,6 +2,7 @@ import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/pokemon_detail_header.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/pokemon_detail_stats_card.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/widgets/pokemon_detail_summary_card.dart';
+import 'package:clean_architecture_poke_app/shared/navigation/home_shell_controller.dart';
 import 'package:clean_architecture_poke_app/shared/widgets/app_bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,9 +11,11 @@ class PokemonDetailPage extends StatelessWidget {
   const PokemonDetailPage({
     super.key,
     required this.pokemonId,
+    this.initialTab = 0,
   });
 
   final int pokemonId;
+  final int initialTab;
 
   @override
   Widget build(BuildContext context) {
@@ -116,18 +119,10 @@ class PokemonDetailPage extends StatelessWidget {
         },
       ),
       bottomNavigationBar: AppBottomNav(
-        currentIndex: 0,
+        currentIndex: initialTab,
         onTap: (index) {
-          if (index == 0) {
-            Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
-          }
-          if (index == 1) {
-            Navigator.of(context).pushNamedAndRemoveUntil(
-              '/',
-              (route) => false,
-              arguments: {'tab': 1},
-            );
-          }
+          HomeShellController.instance.setTab(index);
+          Navigator.of(context).maybePop();
         },
       ),
     );

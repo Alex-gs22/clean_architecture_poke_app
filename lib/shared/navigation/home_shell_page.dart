@@ -2,6 +2,7 @@ import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/bloc/search/search_pokemon_bloc.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/pages/captured_pokemons_page.dart';
 import 'package:clean_architecture_poke_app/features/pokemons/presentation/pages/search_pokemon_page.dart';
+import 'package:clean_architecture_poke_app/shared/navigation/home_shell_controller.dart';
 import 'package:clean_architecture_poke_app/shared/navigation/home_shell_scope.dart';
 import 'package:clean_architecture_poke_app/shared/widgets/app_bottom_nav.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +26,12 @@ class _HomeShellPageState extends State<HomeShellPage> {
     super.initState();
     _index = widget.initialIndex;
     _tabNotifier = ValueNotifier<int>(_index);
+    HomeShellController.instance.register(_setTab);
   }
 
   @override
   void dispose() {
+    HomeShellController.instance.unregister();
     _tabNotifier.dispose();
     super.dispose();
   }
@@ -56,18 +59,7 @@ class _HomeShellPageState extends State<HomeShellPage> {
 
     return HomeShellScope(
       tabNotifier: _tabNotifier,
-      setTab: (i) {
-        if (_index == i) return;
-        setState(() {
-          _index = i;
-          _tabNotifier.value = i;
-        });
-        if (i == 1) {
-          context
-              .read<CapturedPokemonsBloc>()
-              .add(CapturedPokemonsRequested());
-        }
-      },
+      setTab: _setTab,
       child: Scaffold(
         body: IndexedStack(
           index: _index,
@@ -84,5 +76,16 @@ class _HomeShellPageState extends State<HomeShellPage> {
         ),
       ),
     );
+  }
+
+  void _setTab(int i) {
+    if (_index == i) return;
+    setState(() {
+      _index = i;
+      _tabNotifier.value = i;
+    });
+    if (i == 1) {
+      context.read<CapturedPokemonsBloc>().add(CapturedPokemonsRequested());
+    }
   }
 }

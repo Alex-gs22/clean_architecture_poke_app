@@ -129,33 +129,35 @@ class _EmptyState extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const SizedBox(height: 32),
           Container(
             width: 90,
             height: 90,
             decoration: BoxDecoration(
-              color: isDark ? theme.colorScheme.surfaceVariant.withOpacity(0.2) : const Color(0xFFE6E9F4),
+              color: theme.colorScheme.primary.withOpacity(0.12),
               shape: BoxShape.circle,
             ),
             child: Icon(
               Icons.inventory_2_outlined,
-              color: isDark ? Colors.white : const Color(0xFF3B4CCA),
-              size: 38,
+              color: isDark ? Colors.white : theme.colorScheme.primary,
+              size: 36,
             ),
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: 16),
           Text(
-            'No hay Pokémon\'s capturados',
+            'No hay Pokémon capturados',
             style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: isDark ? Colors.white : const Color(0xFF1F2A44),
-            ),
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: isDark ? Colors.white : theme.colorScheme.onSurface),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8),
           Text(
             'Captura algunos para verlos aquí',
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: isDark ? Colors.white70 : const Color(0xFF6E7385),
-            ),
+                  color: theme.colorScheme.onSurfaceVariant),
+            textAlign: TextAlign.center,
           ),
         ],
       ),
