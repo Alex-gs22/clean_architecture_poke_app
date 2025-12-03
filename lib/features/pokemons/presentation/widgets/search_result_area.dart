@@ -9,9 +9,11 @@ class SearchResultArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.colorScheme.brightness == Brightness.dark;
     return BlocConsumer<SearchPokemonBloc, SearchPokemonState>(
-      listenWhen: (previous, current) =>
-          current is SearchPokemonLoaded && current.statusMessage != null,
+      listenWhen:
+          (previous, current) =>
+              current is SearchPokemonLoaded && current.statusMessage != null,
       listener: (context, state) {
         if (state is SearchPokemonLoaded && state.statusMessage != null) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -34,16 +36,16 @@ class SearchResultArea extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 40),
-                const Icon(
+                Icon(
                   Icons.info_outline,
-                  color: Color(0xFF3B4CCA),
+                  color: theme.colorScheme.primary,
                   size: 40,
                 ),
                 const SizedBox(height: 12),
                 Text(
                   state.message,
                   style: theme.textTheme.titleMedium?.copyWith(
-                    color: const Color(0xFF1F2A44),
+                    color: isDark ? Colors.white : theme.colorScheme.onSurface,
                     fontWeight: FontWeight.w600,
                   ),
                   textAlign: TextAlign.center,
@@ -57,16 +59,18 @@ class SearchResultArea extends StatelessWidget {
             pokemon: state.pokemon,
             isCapturing: state.isCapturing,
             isCaptured: state.isCaptured,
-            onCapture: () => context
-                .read<SearchPokemonBloc>()
-                .add(CapturePokemonRequested(state.pokemon)),
-            onViewDetails: () => Navigator.of(context).pushNamed(
-              '/pokemon_detail',
-              arguments: {
-                'id': state.pokemon.id,
-                'captured': state.isCaptured,
-              },
-            ),
+            onCapture:
+                () => context.read<SearchPokemonBloc>().add(
+                  CapturePokemonRequested(state.pokemon),
+                ),
+            onViewDetails:
+                () => Navigator.of(context).pushNamed(
+                  '/pokemon_detail',
+                  arguments: {
+                    'id': state.pokemon.id,
+                    'captured': state.isCaptured,
+                  },
+                ),
           );
         }
         return Center(
@@ -78,9 +82,14 @@ class SearchResultArea extends StatelessWidget {
               Container(
                 width: 94,
                 height: 94,
-                decoration: const BoxDecoration(
-                  color: Color(0xFF3B4CCA),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primary.withOpacity(0.15),
                   shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.search,
+                  color: isDark ? Colors.white : theme.colorScheme.primary,
+                  size: 42,
                 ),
               ),
               const SizedBox(height: 24),
@@ -89,7 +98,7 @@ class SearchResultArea extends StatelessWidget {
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
-                  color: const Color(0xFF1F2A44),
+                  color: isDark ? Colors.white : theme.colorScheme.onSurface,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -97,7 +106,7 @@ class SearchResultArea extends StatelessWidget {
               Text(
                 'Ingresa un ID o prueba con uno aleatorio',
                 style: theme.textTheme.bodyMedium?.copyWith(
-                  color: const Color(0xFF6E7385),
+                  color: theme.colorScheme.onSurfaceVariant,
                 ),
                 textAlign: TextAlign.center,
               ),

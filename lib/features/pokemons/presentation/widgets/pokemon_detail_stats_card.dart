@@ -9,7 +9,10 @@ class PokemonDetailStatsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final stats = pokemon.stats;
-    final surface = Theme.of(context).colorScheme.surface;
+    final theme = Theme.of(context);
+    final surface = theme.colorScheme.brightness == Brightness.dark
+        ? theme.colorScheme.surface.withOpacity(0.12)
+        : theme.colorScheme.surface;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(18),

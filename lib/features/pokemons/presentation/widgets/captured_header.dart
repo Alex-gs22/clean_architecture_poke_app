@@ -9,6 +9,10 @@ class CapturedHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final onBackground = theme.colorScheme.onBackground;
+    final isDark = theme.brightness == Brightness.dark;
+    final circleColor =
+        isDark ? theme.colorScheme.primary : const Color(0xFFF8D7DA);
+    const iconColor = Colors.white;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -17,15 +21,15 @@ class CapturedHeader extends StatelessWidget {
             Container(
               width: 52,
               height: 52,
-              decoration: const BoxDecoration(
-                color: Color(0xFFFFCC00),
+              decoration: BoxDecoration(
+                color: circleColor,
                 shape: BoxShape.circle,
               ),
               alignment: Alignment.center,
               child: Text(
                 '$count',
                 style: TextStyle(
-                  color: onBackground,
+                  color: iconColor,
                   fontWeight: FontWeight.w800,
                   fontSize: 18,
                 ),

@@ -42,11 +42,13 @@ class PokemonDetailPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           if (state is PokemonDetailError) {
+            final isDark =
+                Theme.of(context).colorScheme.brightness == Brightness.dark;
             return Center(
               child: Text(
                 state.message,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: const Color(0xFF1F2A44),
+                      color: isDark ? Colors.white : const Color(0xFF1F2A44),
                       fontWeight: FontWeight.w600,
                     ),
               ),

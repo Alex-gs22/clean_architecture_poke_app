@@ -57,11 +57,13 @@ class CapturedPokemonsPage extends StatelessWidget {
                     return const Center(child: CircularProgressIndicator());
                   }
                   if (state is CapturedPokemonsError) {
+                    final isDark =
+                        Theme.of(context).colorScheme.brightness == Brightness.dark;
                     return Center(
                       child: Text(
                         state.message,
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              color: const Color(0xFF1F2A44),
+                              color: isDark ? Colors.white : const Color(0xFF1F2A44),
                               fontWeight: FontWeight.w600,
                             ),
                       ),
@@ -121,6 +123,8 @@ class CapturedPokemonsPage extends StatelessWidget {
 class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.colorScheme.brightness == Brightness.dark;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -128,30 +132,30 @@ class _EmptyState extends StatelessWidget {
           Container(
             width: 90,
             height: 90,
-            decoration: const BoxDecoration(
-              color: Color(0xFFE6E9F4),
+            decoration: BoxDecoration(
+              color: isDark ? theme.colorScheme.surfaceVariant.withOpacity(0.2) : const Color(0xFFE6E9F4),
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.inventory_2_outlined,
-              color: Color(0xFF3B4CCA),
+              color: isDark ? Colors.white : const Color(0xFF3B4CCA),
               size: 38,
             ),
           ),
           const SizedBox(height: 18),
           Text(
             'No hay Pokémon\'s capturados',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w700,
-              color: const Color(0xFF1F2A44),
+              color: isDark ? Colors.white : const Color(0xFF1F2A44),
             ),
           ),
           const SizedBox(height: 8),
           Text(
             'Captura algunos para verlos aquí',
-            style: Theme.of(
-              context,
-            ).textTheme.bodyMedium?.copyWith(color: const Color(0xFF6E7385)),
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: isDark ? Colors.white70 : const Color(0xFF6E7385),
+            ),
           ),
         ],
       ),

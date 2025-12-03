@@ -14,7 +14,9 @@ class CapturedListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final surface = theme.colorScheme.surface;
+    final surface = theme.colorScheme.brightness == Brightness.dark
+        ? theme.colorScheme.surface.withOpacity(0.12)
+        : theme.colorScheme.surface;
     final onSurface = theme.colorScheme.onSurface;
     final surfaceVariant = theme.colorScheme.surfaceVariant;
     return InkWell(

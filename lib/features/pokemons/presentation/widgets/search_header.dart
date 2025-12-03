@@ -7,6 +7,10 @@ class SearchHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final onBackground = theme.colorScheme.onBackground;
+    final isDark = theme.brightness == Brightness.dark;
+    final circleColor =
+        isDark ? theme.colorScheme.primary : const Color(0xFFF8D7DA);
+    const iconColor = Colors.white;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -15,13 +19,13 @@ class SearchHeader extends StatelessWidget {
             Container(
               width: 52,
               height: 52,
-              decoration: const BoxDecoration(
-                color: Color(0xFFFFCC00),
+              decoration: BoxDecoration(
+                color: circleColor,
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.catching_pokemon,
-                color: onBackground,
+                color: iconColor,
                 size: 28,
               ),
             ),
