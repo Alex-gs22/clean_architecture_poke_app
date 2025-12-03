@@ -31,7 +31,7 @@ class CapturedListItem extends StatelessWidget {
           ],
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               width: 64,
@@ -57,6 +57,7 @@ class CapturedListItem extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     _capitalize(pokemon.name),
@@ -93,7 +94,8 @@ class CapturedListItem extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: pokemon.types
                   .map(
                     (t) => Container(
@@ -112,6 +114,7 @@ class CapturedListItem extends StatelessWidget {
                           color: Color(0xFF1F2A44),
                           fontWeight: FontWeight.w700,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   )

@@ -65,7 +65,9 @@ class PokemonDetailPage extends StatelessWidget {
                           ? null
                           : () => _action(context),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF3B4CCA),
+                        backgroundColor: state.isCaptured
+                            ? const Color(0xFFF95F62)
+                            : const Color(0xFF3B4CCA),
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
